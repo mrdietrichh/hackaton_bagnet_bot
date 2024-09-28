@@ -18,7 +18,7 @@ kbn3.add(types.InlineKeyboardButton(text="Назад", callback_data="back3"))
 kb0 = InlineKeyboardBuilder()
 kb0.add(types.InlineKeyboardButton(text="Вопросы", callback_data="my_vopr"))
 kb0.add(types.InlineKeyboardButton(text="Ответы", callback_data="my_otv"))
-kb0.add(types.InlineKeyboardButton(text="Баллы", callback_data="my_score"))
+kb0.add(types.InlineKeyboardButton(text="Общий рейтинг", callback_data="my_score"))
 kb0.add(types.InlineKeyboardButton(text="Форум", callback_data="forum"))
 
 kb1 = InlineKeyboardBuilder()
