@@ -1,39 +1,52 @@
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils.keyboard import InlineKeyboardBuilder
+
+
 # Для отправки HTTP запросов в API ASP.NET
 
+def create_inline_keyboard(buttons):
+    keyboard = InlineKeyboardBuilder()
+    for button in buttons:
+        keyboard.add(types.InlineKeyboardButton(text=button['text'], callback_data=button['callback_data']))
+    return keyboard
 
-kbn = InlineKeyboardBuilder()
-kbn.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
 
-kbn1 = InlineKeyboardBuilder()
-kbn1.add(types.InlineKeyboardButton(text="Назад", callback_data="back1"))
+kbn = create_inline_keyboard([{'text': 'Назад', 'callback_data': 'back'}])
 
-kbn2 = InlineKeyboardBuilder()
-kbn2.add(types.InlineKeyboardButton(text="Назад", callback_data="back2"))
+kbn1 = create_inline_keyboard([{'text': 'Назад', 'callback_data': 'back1'}])
 
-kbn3 = InlineKeyboardBuilder()
-kbn3.add(types.InlineKeyboardButton(text="Назад", callback_data="back3"))
+kbn2 = create_inline_keyboard([{'text': 'Назад', 'callback_data': 'back2'}])
 
-kb0 = InlineKeyboardBuilder()
-kb0.add(types.InlineKeyboardButton(text="Вопросы", callback_data="my_vopr"))
-kb0.add(types.InlineKeyboardButton(text="Ответы", callback_data="my_otv"))
-kb0.add(types.InlineKeyboardButton(text="Общий рейтинг", callback_data="my_score"))
-kb0.add(types.InlineKeyboardButton(text="Форум", callback_data="forum"))
+kbn3 = create_inline_keyboard([{'text': 'Назад', 'callback_data': 'back3'}])
 
-kb1 = InlineKeyboardBuilder()
-kb1.add(types.InlineKeyboardButton(text="Задать", callback_data="vopr"))
-kb1.add(types.InlineKeyboardButton(text="Ответить", callback_data="otv"))
-kb1.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
+main_menu_buttons = [
+    {'text': 'Мои вопросы', 'callback_data': 'my_vopr'},
+    {'text': 'Мои ответы', 'callback_data': 'my_otv'},
+    {'text': 'Общий рейтинг', 'callback_data': 'my_score'},
+    {'text': 'Форум', 'callback_data': 'my_vopr'},
+]
 
-kb2 = InlineKeyboardBuilder()
-kb2.add(types.InlineKeyboardButton(text="Матем", callback_data="v_mat"))
-kb2.add(types.InlineKeyboardButton(text="Физ", callback_data="v_fiz"))
-kb2.add(types.InlineKeyboardButton(text="Информ", callback_data="v_inf"))
-kb2.add(types.InlineKeyboardButton(text="Назад", callback_data="back1"))
+kb0 = create_inline_keyboard(main_menu_buttons)
 
-kb3 = InlineKeyboardBuilder()
-kb3.add(types.InlineKeyboardButton(text="Мат", callback_data="mat"))
-kb3.add(types.InlineKeyboardButton(text="Физ", callback_data="fiz"))
-kb3.add(types.InlineKeyboardButton(text="Информ", callback_data="inf"))
-kb3.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
+forum_buttons = [
+    {'text': 'Задать вопрос', 'callback_data': 'vopr'},
+    {'text': 'Ответить на вопрос', 'callback_data': 'otv'},
+    {'text': 'Назад', 'callback_data': 'back'},
+]
+kb1 = create_inline_keyboard(forum_buttons)
+
+kb2_buttons = [
+    {'text': 'Математика', 'callback_data': 'v_mat'},
+    {'text': 'Физика', 'callback_data': 'v_fiz'},
+    {'text': 'Информ', 'callback_data': 'v_inf'},
+    {'text': 'Назад', 'callback_data': 'back1'},
+]
+kb2 = create_inline_keyboard(kb2_buttons)
+
+kb3_buttons = [
+    {'text': 'Математика', 'callback_data': 'mat'},
+    {'text': 'Физика', 'callback_data': 'fiz'},
+    {'text': 'Информатика', 'callback_data': 'inf'},
+    {'text': 'Назад', 'callback_data': 'back'},
+]
+kb3 = create_inline_keyboard(kb3_buttons)
