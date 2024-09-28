@@ -6,47 +6,13 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 # Для отправки HTTP запросов в API ASP.NET
 import requests, json
-
+from KeyBoards import kbn, kbn1, kbn2, kbn3
 
 
 logging.basicConfig(level=logging.INFO)
-bot = Bot(token="7666590149:AAF75xg0HsEKdZlHRdliRGEGfHWLick6prM")
+bot = Bot(token="7667356981:AAECXx4Zt0bVOmg7P8iE3O_Qssntdk2_HJg")
 dp = Dispatcher()
 
-kbn = InlineKeyboardBuilder()
-kbn.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
-
-kbn1 = InlineKeyboardBuilder()
-kbn1.add(types.InlineKeyboardButton(text="Назад", callback_data="back1"))
-
-kbn2 = InlineKeyboardBuilder()
-kbn2.add(types.InlineKeyboardButton(text="Назад", callback_data="back2"))
-
-kbn3 = InlineKeyboardBuilder()
-kbn3.add(types.InlineKeyboardButton(text="Назад", callback_data="back3"))
-
-kb0 = InlineKeyboardBuilder()
-kb0.add(types.InlineKeyboardButton(text="Вопросы", callback_data="my_vopr"))
-kb0.add(types.InlineKeyboardButton(text="Ответы", callback_data="my_otv"))
-kb0.add(types.InlineKeyboardButton(text="Баллы", callback_data="my_score"))
-kb0.add(types.InlineKeyboardButton(text="Форум", callback_data="forum"))
-
-kb1 = InlineKeyboardBuilder()
-kb1.add(types.InlineKeyboardButton(text="Задать", callback_data="vopr"))
-kb1.add(types.InlineKeyboardButton(text="Ответить", callback_data="otv"))
-kb1.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
-
-kb2 = InlineKeyboardBuilder()
-kb2.add(types.InlineKeyboardButton(text="Матем", callback_data="v_mat"))
-kb2.add(types.InlineKeyboardButton(text="Физ", callback_data="v_fiz"))
-kb2.add(types.InlineKeyboardButton(text="Информ", callback_data="v_inf"))
-kb2.add(types.InlineKeyboardButton(text="Назад", callback_data="back1"))
-
-kb3 = InlineKeyboardBuilder()
-kb3.add(types.InlineKeyboardButton(text="Мат", callback_data="mat"))
-kb3.add(types.InlineKeyboardButton(text="Физ", callback_data="fiz"))
-kb3.add(types.InlineKeyboardButton(text="Информ", callback_data="inf"))
-kb3.add(types.InlineKeyboardButton(text="Назад", callback_data="back"))
 
 
 @dp.message(Command("start"))
@@ -69,16 +35,23 @@ async def cmd_start(message: types.Message):
 
     @dp.callback_query(F.data == 'my_score')
     async def m_s(callback: types.CallbackQuery):
-        api_url = ''
-        data = {'s': 's'}
-        json_data = json.dump(data)
-        print(json_data)
-        response = requests.post(api_url, data=json_data, headers={'Content-Type': 'application/json'})
-        if response.status_code == 200:
-            print('work')
+        api_url = 'http://localhost:8001/api/Category/get-all'
+        # data = {'s': 's'}
+        # json_data = json.dump(data)
+        # print(json_data)
+        # response = requests.post(api_url, data=json_data, headers={'Content-Type': 'application/json'})
+        response = requests.get(api_url)
+        result = json.loads(response.text)
+        if not result['succeeded']:
+            await callback.message.answer(f"Произошла ошибка", reply_markup=kbn.as_markup())
+            await callback.message.delete()
 
-        await callback.message.answer("Ожидайте ответ от бд по вашим баллам", reply_markup=kbn.as_markup())
+        category = result['data'][0]
+        # ['category_id']
+
+        await callback.message.answer(f"{category['title']}", reply_markup=kbn.as_markup())
         await callback.message.delete()
+
 
     @dp.callback_query(F.data == 'forum')
     async def forum(callback: types.CallbackQuery):
