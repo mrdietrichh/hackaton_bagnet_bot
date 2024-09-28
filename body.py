@@ -2,17 +2,15 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters.command import Command
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram import F
 # Для отправки HTTP запросов в API ASP.NET
 import requests, json
-from KeyBoards import kbn, kbn1, kbn2, kbn3
+from KeyBoards import kbn, kb1, kbn2, kb2, kbn1, kbn3, kb0, kb3
 
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token="7667356981:AAECXx4Zt0bVOmg7P8iE3O_Qssntdk2_HJg")
 dp = Dispatcher()
-
 
 
 @dp.message(Command("start"))
